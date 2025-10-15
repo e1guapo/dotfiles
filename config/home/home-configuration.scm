@@ -8,6 +8,7 @@
              (gnu packages)
              (gnu services)
              (guix gexp)
+             (gnu home services dotfiles))
              (gnu home services shells))
 
 (home-environment
@@ -63,8 +64,7 @@
 
   ;; Below is the list of Home services.  To search for available
   ;; services, run 'guix home search KEYWORD' in a terminal.
-  (services
-   (append (list (service home-bash-service-type
+  (services (append (list (service home-bash-service-type
                           (home-bash-configuration
                            (aliases '(("alert" . "notify-send --urgency=low -i \"$([ $? = 0 ] && echo terminal || echo error)\" \"$(history|tail -n1|sed -e '\\''s/^\\s*[0-9]\\+\\s*//;s/[;&|]\\s*alert$//'\\'')\"")
                                       ("claude" . "npx @anthropic-ai/claude-code")
@@ -76,10 +76,9 @@
                                       ("l" . "ls -CF")
                                       ("la" . "ls -A")
                                       ("ll" . "ls -alF")
-                                      ("ls" . "ls --color=auto")))
-                           (bashrc (list (local-file "guix-config//.bashrc"
-                                                     "bashrc")))
-                           (bash-logout (list (local-file
-                                               "guix-config//.bash_logout"
-                                               "bash_logout"))))))
-           %base-home-services)))
+                                      ("ls" . "ls --color=auto"))))))
+           %base-home-services)
+
+            (service home-dotfiles-service-type
+                     (home-dotfiles-configuration
+                       (directories '("../../files"))))))
