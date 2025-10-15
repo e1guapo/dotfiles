@@ -1,0 +1,5 @@
+*.bndb
+tags
+
+*.backup
+.aider*
