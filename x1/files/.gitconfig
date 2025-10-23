@@ -1,0 +1,27 @@
+[user]
+	name = Dennis Losa
+	email = dennis.losa@gmail.com
+[merge]
+	conflictstyle = diff3
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge --skip -- %f
+	process = git-lfs filter-process --skip
+	required = true
+[init]
+	defaultBranch = main
+[core]
+	autocrlf = input
+	excludesfile = /home/dennis/.gitignore
+[http]
+	sslCAinfo = /etc/ssl/certs/ca-certificates.crt
+[includeIf "gitdir:**/redshell/**"]
+    path = .gitconfig-public
+[includeIf "gitdir:**/echolochation/**"]
+    path = .gitconfig-work
+[includeIf "hasconfig:remote.*.url:git@gitlab.pd.kududyn.com*/**"]
+    path = .gitconfig-work
+[includeIf "gitdir:**/styx/**"]
+    path = .gitconfig-public
+[includeIf "gitdir:**/aixcc/**"]
+    path = .gitconfig-aixcc

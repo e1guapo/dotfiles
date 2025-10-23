@@ -60,7 +60,8 @@
                                             "openssl"
                                             "pkg-config"
                                             "libxcrypt"
-                                            "glibc-locales")))
+                                            "glibc-locales"
+                                            "xfce4-settings")))
 
   ;; Below is the list of Home services.  To search for available
   ;; services, run 'guix home search KEYWORD' in a terminal.
