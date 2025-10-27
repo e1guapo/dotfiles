@@ -1,0 +1,11 @@
+! LOAD ONLY WHEN USING THE LAPTOP KEYBOARD!
+!   xmodmap ~/.Xmodmap
+!
+! Revert to default (clear this mapping):
+!   setxkbmap -option ''
+! Remove Control_R from mod4
+remove mod4 = Control_R
+! Remap Super key to Control
+keycode 133 = Control_R
+! Add Control_R to control
+add control = Control_R
