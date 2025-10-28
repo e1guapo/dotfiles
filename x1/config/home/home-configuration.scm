@@ -16,12 +16,20 @@
   ;; Below is the list of packages that will show up in your
   ;; Home profile, under ~/.guix-home/profile.
   (packages (specifications->packages (list "meld"
+
+					    ;; DELETEME
+					    "diffutils"
+					    "coreutils"
+					    "bash"
+					    "opam"
+
                                             "nmap"
                                             "keepassxc"
                                             "flameshot"
                                             "imagemagick"
                                             "python-virtualenv"
                                             "cifs-utils"
+					    "node"
                                             "git-lfs"
                                             "gnupg"
                                             "git"
@@ -41,6 +49,7 @@
                                             "python-packaging"
                                             "nss-certs"
                                             "simg2img"
+					    "opam"
                                             "vim-full"
                                             "inotify-tools"
                                             "xclip"
@@ -65,7 +74,12 @@
 
   ;; Below is the list of Home services.  To search for available
   ;; services, run 'guix home search KEYWORD' in a terminal.
-  (services (list (service home-xdg-base-directories-service-type)
+  (services (list (service home-bash-service-type
+                           (home-bash-configuration
+                            (bashrc (list (local-file "../../files/.bashrc" "bashrc")))
+                            (bash-profile (list (local-file "../../files/.profile" "bash_profile")))
+                            (bash-logout (list (local-file "../../files/.bash_logout" "bash_logout")))))
                   (service home-dotfiles-service-type
                            (home-dotfiles-configuration
-                            (directories '("../../files")))))))
+                            (directories '("../../files"))
+                            (excluded '("^\\.bashrc$" "^\\.profile$" "^\\.bash_logout$")))))))
