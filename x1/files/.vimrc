@@ -1,4 +1,8 @@
 " <<<
+" Security: disable automatic sourcing of local vimrc files
+set noexrc
+set secure
+
 " Use bash as shell (needed for Guix environments where /bin/sh doesn't exist)
 if executable('bash')
   set shell=bash
@@ -307,9 +311,11 @@ nnoremap <C-p> :Rg<CR>
 
 " NERDTree stuff
 nnoremap <C-n> :NERDTreeToggle<CR>
-" Start NERDTree when Vim is started without file arguments.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+" Start NERDTree when Vim is started without file arguments (only if plugins available).
+if plug_installed
+  autocmd StdinReadPre * let s:std_in=1
+  autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+endif
 
 " Turn on by default.
 set number relativenumber
@@ -355,7 +361,11 @@ endfor
 " ## end of OPAM user-setup addition for vim / base ## keep this line
 " ## added by OPAM user-setup for vim / ocp-indent ## b29558e067cfbc178422d6e98461868c ## you can edit, but keep this line
 if count(s:opam_available_tools,"ocp-indent") == 0
-  source "/home/dennis/.opam/default/share/ocp-indent/vim/indent/ocaml.vim"
+  let ocaml_indent_file = "/home/dennis/.opam/default/share/ocp-indent/vim/indent/ocaml.vim"
+  if filereadable(ocaml_indent_file)
+    source "/home/dennis/.opam/default/share/ocp-indent/vim/indent/ocaml.vim"
+  endif
+  unlet ocaml_indent_file
 endif
 " ## end of OPAM user-setup addition for vim / ocp-indent ## keep this line
 
