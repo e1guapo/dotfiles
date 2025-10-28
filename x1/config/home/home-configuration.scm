@@ -16,12 +16,12 @@
   ;; Below is the list of packages that will show up in your
   ;; Home profile, under ~/.guix-home/profile.
   (packages (specifications->packages (list "meld"
+					    "tree"
 
-					    ;; DELETEME
-					    "diffutils"
-					    "coreutils"
-					    "bash"
-					    "opam"
+					     ;; uncomment to try with guix container
+					     ;;"diffutils"
+					     ;;"coreutils"
+					     ;;"bash"
 
                                             "nmap"
                                             "keepassxc"

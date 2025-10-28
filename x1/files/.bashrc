@@ -160,39 +160,50 @@ command -v direnv >/dev/null 2>&1 && eval "$(direnv hook bash)"
 #export PATH="$PATH:~/.local/share/flatpak/exports/bin"
 
 # guix stuff
-export GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
+if [ -d "$HOME/.guix-profile/lib/locale" ]; then
+    export GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
+fi
 
 # guix stuff
 GUIX_PROFILE="/home/dennis/.guix-profile"
-. "$GUIX_PROFILE/etc/profile"
-
-GUIX_PROFILE="/home/dennis/.config/guix/current"
-. "$GUIX_PROFILE/etc/profile"
-
-export BASH_COMPLETION_USER_DIR=~/.guix-profile/share/bash-completion:$BASH_COMPLETION_USER_DIR
-
-### ssh-agent auto-run
-env=~/.ssh/agent.env
-
-agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
-
-agent_start () {
-    (umask 077; ssh-agent >| "$env")
-    . "$env" >| /dev/null ; }
-
-agent_load_env
-
-# agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2=agent not running
-agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
-
-if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
-    agent_start
-    ssh-add
-elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
-    ssh-add
+if [ -f "$GUIX_PROFILE/etc/profile" ]; then
+    . "$GUIX_PROFILE/etc/profile"
 fi
 
-unset env
+GUIX_PROFILE="/home/dennis/.config/guix/current"
+if [ -f "$GUIX_PROFILE/etc/profile" ]; then
+    . "$GUIX_PROFILE/etc/profile"
+fi
+
+if [ -d "$HOME/.guix-profile/share/bash-completion" ]; then
+    export BASH_COMPLETION_USER_DIR=~/.guix-profile/share/bash-completion:$BASH_COMPLETION_USER_DIR
+fi
+
+### ssh-agent auto-run
+# Only run in interactive shells and when ssh-agent is available
+if [[ $- == *i* ]] && command -v ssh-agent >/dev/null 2>&1; then
+    env=~/.ssh/agent.env
+
+    agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
+
+    agent_start () {
+        (umask 077; ssh-agent >| "$env")
+        . "$env" >| /dev/null ; }
+
+    agent_load_env
+
+    # agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2=agent not running
+    agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
+
+    if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
+        agent_start
+        ssh-add
+    elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
+        ssh-add
+    fi
+
+    unset env
+fi
 ###
 
 ## >>> conda initialize >>>
@@ -220,5 +231,10 @@ if [ -n "$GUIX_ENVIRONMENT" ]; then
     fi
 fi
 
-. "$HOME/.local/share/../bin/env"
-eval "$(uv generate-shell-completion bash)"
+if [ -f "$HOME/.local/share/../bin/env" ]; then
+    . "$HOME/.local/share/../bin/env"
+fi
+
+if command -v uv >/dev/null 2>&1; then
+    eval "$(uv generate-shell-completion bash)"
+fi
