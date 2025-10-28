@@ -130,14 +130,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias claude='npx @anthropic-ai/claude-code'
 alias codex='npx @openai/codex@latest'
 
-## pyenv stuff
-#export PYENV_ROOT="$HOME/.pyenv"
-#[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-#if command -v pyenv 1>/dev/null 2>&1; then
-#  eval "$(pyenv init - bash)"
-#fi
-#eval "$(pyenv virtualenv-init -)"
-
 #. "$HOME/.cargo/env"
 
 #export CONDA_PREFIX=/home/dennis/miniconda3
@@ -178,28 +170,6 @@ GUIX_PROFILE="/home/dennis/.config/guix/current"
 . "$GUIX_PROFILE/etc/profile"
 
 export BASH_COMPLETION_USER_DIR=~/.guix-profile/share/bash-completion:$BASH_COMPLETION_USER_DIR
-
-# virtualenvwrapper stuff
-export WORKON_HOME=$HOME/.virtualenv
-source $HOME/.local/bin/virtualenvwrapper.sh
-virtualenv_prompt() {
-    # If not in a virtualenv, print nothing
-    [[ "$VIRTUAL_ENV" == "" ]] && return
-
-    # Distinguish between the shell where the virtualenv was activated
-    # and its children
-    local venv_name="${VIRTUAL_ENV##*/}"
-    if typeset -f deactivate >/dev/null; then
-        echo "[${venv_name}] "
-    else
-        echo "<${venv_name}> "
-    fi
-}
-
-# Display a "we are in a virtualenv" indicator that works in child shells too
-VIRTUAL_ENV_DISABLE_PROMPT=1
-PS1='$(virtualenv_prompt)'"$PS1"
-################################################################################
 
 ### ssh-agent auto-run
 env=~/.ssh/agent.env
