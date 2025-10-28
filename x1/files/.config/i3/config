@@ -60,10 +60,15 @@ bindsym $mod+d exec --no-startup-id "dmenu_run -nf '#BBBBBB' -nb '#222222' -sb '
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+#bindsym $mod+j focus left
+#bindsym $mod+k focus down
+#bindsym $mod+l focus up
+#bindsym $mod+semicolon focus right
+# change focus... vim style
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -72,10 +77,15 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+# bindsym $mod+Shift+j move left
+# bindsym $mod+Shift+k move down
+# bindsym $mod+Shift+l move up
+# bindsym $mod+Shift+semicolon move right
+# move focused window... vim style
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -84,7 +94,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+z split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -121,6 +131,15 @@ set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
+set $ws11 "11"
+set $ws12 "12"
+set $ws13 "13"
+set $ws14 "14"
+set $ws15 "15"
+set $ws16 "16"
+set $ws17 "17"
+set $ws18 "18"
+set $ws19 "19"
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -133,6 +152,15 @@ bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
+bindsym $mod+Ctrl+1 workspace number $ws11
+bindsym $mod+Ctrl+2 workspace number $ws12
+bindsym $mod+Ctrl+3 workspace number $ws13
+bindsym $mod+Ctrl+4 workspace number $ws14
+bindsym $mod+Ctrl+5 workspace number $ws15
+bindsym $mod+Ctrl+6 workspace number $ws16
+bindsym $mod+Ctrl+7 workspace number $ws17
+bindsym $mod+Ctrl+8 workspace number $ws18
+bindsym $mod+Ctrl+9 workspace number $ws19
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
@@ -145,6 +173,17 @@ bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
+
+## Modify // Move Window to Workspace 11 - 19// <><Ctrl><Shift> 1..9 ##
+bindsym $mod+Shift+Ctrl+1 move container to workspace number $ws11
+bindsym $mod+Shift+Ctrl+2 move container to workspace number $ws12
+bindsym $mod+Shift+Ctrl+3 move container to workspace number $ws13
+bindsym $mod+Shift+Ctrl+4 move container to workspace number $ws14
+bindsym $mod+Shift+Ctrl+5 move container to workspace number $ws15
+bindsym $mod+Shift+Ctrl+6 move container to workspace number $ws16
+bindsym $mod+Shift+Ctrl+7 move container to workspace number $ws17
+bindsym $mod+Shift+Ctrl+8 move container to workspace number $ws18
+bindsym $mod+Shift+Ctrl+9 move container to workspace number $ws19
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -161,10 +200,14 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
+        # bindsym j resize shrink width 10 px or 10 ppt
+        # bindsym k resize grow height 10 px or 10 ppt
+        # bindsym l resize shrink height 10 px or 10 ppt
+        # bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym j resize shrink height 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -179,6 +222,20 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+
+# move workspace
+mode "move_workspace" {
+        # These bindings trigger as soon as you enter the move workspace mode
+
+        bindsym l move workspace to output right
+        bindsym h move workspace to output left
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+w mode "move_workspace"
 
 # class                 border  bground text    indicator child_border
 client.focused          #83CAFA #51A2DA #FFFFFF #83CAFA   #51A2DA
@@ -205,3 +262,6 @@ bar {
   }
   status_command i3status
 }
+
+focus_follows_mouse no
+bindsym $mod+Escape exec "i3lock -c 000000"
