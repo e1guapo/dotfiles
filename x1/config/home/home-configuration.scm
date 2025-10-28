@@ -8,6 +8,7 @@
              (gnu packages)
              (gnu services)
              (guix gexp)
+             (gnu home services)
              (gnu home services dotfiles)
              (gnu home services shells)
              (gnu home services xdg))
@@ -19,9 +20,9 @@
 					    "tree"
 
 					     ;; uncomment to try with guix container
-					     ;;"diffutils"
-					     ;;"coreutils"
-					     ;;"bash"
+					     "diffutils"
+					     "coreutils"
+					     "bash"
 
                                             "nmap"
                                             "keepassxc"
@@ -74,12 +75,16 @@
 
   ;; Below is the list of Home services.  To search for available
   ;; services, run 'guix home search KEYWORD' in a terminal.
-  (services (list (service home-bash-service-type
+  (services (list (simple-service 'custom-env-vars
+                                  home-environment-variables-service-type
+                                  `(("PATH" . "$HOME/bin:$HOME/.local/bin:$PATH")
+                                    ("GDK_DPI_SCALE" . "1.25")))
+                  (service home-bash-service-type
                            (home-bash-configuration
                             (bashrc (list (local-file "../../files/.bashrc" "bashrc")))
-                            (bash-profile (list (local-file "../../files/.profile" "bash_profile")))
+                            (bash-profile (list (local-file "../../files/.bash_profile" "bash_profile")))
                             (bash-logout (list (local-file "../../files/.bash_logout" "bash_logout")))))
                   (service home-dotfiles-service-type
                            (home-dotfiles-configuration
                             (directories '("../../files"))
-                            (excluded '("^\\.bashrc$" "^\\.profile$" "^\\.bash_logout$")))))))
+                            (excluded '("^\\.bashrc$" "^\\.bash_logout$" "^\\.bash_profile$" "^\\.profile$")))))))
