@@ -1,12 +1,24 @@
 " <<<
+" Use bash as shell (needed for Guix environments where /bin/sh doesn't exist)
+if executable('bash')
+  set shell=bash
+endif
+
 " Install plug.vim, if not installed.
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+let plug_installed = !empty(glob(data_dir . '/autoload/plug.vim'))
+if !plug_installed
+  " Try to install vim-plug (only works if network is available)
+  silent! execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  let plug_installed = !empty(glob(data_dir . '/autoload/plug.vim'))
+  if plug_installed
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
 endif
-" Install plugins using plug.vim (top of .vimrc).
-call plug#begin()
+
+" Only load plugins if vim-plug is available
+if plug_installed
+  call plug#begin()
 Plug 'vimwiki/vimwiki'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -32,7 +44,8 @@ Plug 'dense-analysis/ale'
 Plug 'morhetz/gruvbox'
 Plug 'haishanh/night-owl.vim'
 Plug 'cocopon/iceberg.vim'
-call plug#end()
+  call plug#end()
+endif
 
 " rustfmt configuration
 let g:rustfmt_autosave = 0
@@ -106,7 +119,8 @@ endif
 "let g:gruvbox_contrast_dark = "hard"
 "colorscheme gruvbox
 "colorscheme night-owl
-colorscheme iceberg
+" Only set colorscheme if it's available (requires vim-plug plugins)
+silent! colorscheme iceberg
 
 set sw=4
 set sts=4
@@ -255,10 +269,12 @@ fun! TrimWhitespace()
 endfun
 noremap <Leader>w :call TrimWhitespace()<CR>
 
-if filereadable("/home/dennis/.vim/coc-config.vim")
+" Only load coc config if coc.nvim is available
+if plug_installed && filereadable("/home/dennis/.vim/coc-config.vim")
  source ~/.vim/coc-config.vim
 endif
-if filereadable("/home/dennis/.vim/markdown-preview.vim")
+" Only load markdown-preview config if plugins are available
+if plug_installed && filereadable("/home/dennis/.vim/markdown-preview.vim")
  source /home/dennis/.vim/markdown-preview.vim
 endif
 
