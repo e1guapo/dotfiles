@@ -8,8 +8,9 @@
              (gnu packages)
              (gnu services)
              (guix gexp)
-             (gnu home services dotfiles))
-             (gnu home services shells))
+             (gnu home services dotfiles)
+             (gnu home services shells)
+             (gnu home services xdg))
 
 (home-environment
   ;; Below is the list of packages that will show up in your
@@ -44,7 +45,6 @@
                                             "inotify-tools"
                                             "xclip"
                                             "make"
-                                            "vim"
                                             "file"
                                             "libbsd"
                                             "libtool"
@@ -65,21 +65,7 @@
 
   ;; Below is the list of Home services.  To search for available
   ;; services, run 'guix home search KEYWORD' in a terminal.
-  (services (append (list (service home-bash-service-type
-                          (home-bash-configuration
-                           (aliases '(("alert" . "notify-send --urgency=low -i \"$([ $? = 0 ] && echo terminal || echo error)\" \"$(history|tail -n1|sed -e '\\''s/^\\s*[0-9]\\+\\s*//;s/[;&|]\\s*alert$//'\\'')\"")
-                                      ("claude" . "npx @anthropic-ai/claude-code")
-                                      ("codex" . "npx @openai/codex@latest")
-                                      ("egrep" . "egrep --color=auto")
-                                      ("fgrep" . "fgrep --color=auto")
-                                      ("ghidra" . "/opt/ghidra_11.3.2_PUBLIC/ghidraRun")
-                                      ("grep" . "grep --color=auto")
-                                      ("l" . "ls -CF")
-                                      ("la" . "ls -A")
-                                      ("ll" . "ls -alF")
-                                      ("ls" . "ls --color=auto"))))))
-           %base-home-services)
-
-            (service home-dotfiles-service-type
-                     (home-dotfiles-configuration
-                       (directories '("../../files"))))))
+  (services (list (service home-xdg-base-directories-service-type)
+                  (service home-dotfiles-service-type
+                           (home-dotfiles-configuration
+                            (directories '("../../files")))))))
