@@ -117,9 +117,7 @@ fi
 ################################################################################
 set -o vi
 export EDITOR=vim
-export PATH=/home/dennis/.local/bin:$PATH
-export PATH=/home/dennis/bin:$PATH
-
+# Note: $HOME/bin and $HOME/.local/bin are managed by guix home configuration
 export PATH=/opt/jdk-21.0.7+6/bin:$PATH
 alias ghidra=/opt/ghidra_11.3.2_PUBLIC/ghidraRun
 
@@ -159,25 +157,6 @@ command -v direnv >/dev/null 2>&1 && eval "$(direnv hook bash)"
 #alias_flatpak_exports
 #export PATH="$PATH:~/.local/share/flatpak/exports/bin"
 
-# guix stuff
-if [ -d "$HOME/.guix-profile/lib/locale" ]; then
-    export GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
-fi
-
-# guix stuff
-GUIX_PROFILE="/home/dennis/.guix-profile"
-if [ -f "$GUIX_PROFILE/etc/profile" ]; then
-    . "$GUIX_PROFILE/etc/profile"
-fi
-
-GUIX_PROFILE="/home/dennis/.config/guix/current"
-if [ -f "$GUIX_PROFILE/etc/profile" ]; then
-    . "$GUIX_PROFILE/etc/profile"
-fi
-
-if [ -d "$HOME/.guix-profile/share/bash-completion" ]; then
-    export BASH_COMPLETION_USER_DIR=~/.guix-profile/share/bash-completion:$BASH_COMPLETION_USER_DIR
-fi
 
 ### ssh-agent auto-run
 # Only run in interactive shells and when ssh-agent is available
@@ -229,10 +208,6 @@ if [ -n "$GUIX_ENVIRONMENT" ]; then
     if [[ $PS1 =~ (.*)"\\$" ]]; then
         PS1="${BASH_REMATCH[1]} [env]\\\$ "
     fi
-fi
-
-if [ -f "$HOME/.local/share/../bin/env" ]; then
-    . "$HOME/.local/share/../bin/env"
 fi
 
 if command -v uv >/dev/null 2>&1; then

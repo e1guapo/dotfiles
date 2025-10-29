@@ -15,6 +15,3 @@ if [ -d "$HOME/.bash_completion" ] && [ -d "$HOME/.guix-profile/etc/bash_complet
     done
 fi
 
-if [ -f "$HOME/.local/share/../bin/env" ]; then
-    . "$HOME/.local/share/../bin/env"
-fi
