@@ -21,11 +21,17 @@ font pango:DejaVu Sans Mono 20
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
-exec --no-startup-id dex-autostart --autostart --environment i3
+exec --no-startup-id env XDG_DATA_DIRS="/usr/local/share:/usr/share:${XDG_DATA_DIRS}" dex-autostart --autostart --environment i3
 exec --no-startup-id xfsettingsd
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
+
+# Start power manager (handles display timeout and suspend)
+exec --no-startup-id env XDG_DATA_DIRS=/usr/local/share:/usr/share:$XDG_DATA_DIRS xfce4-power-manager
+
+# Lock screen after 90 minutes (5400 seconds)
+exec --no-startup-id xset s 5400 5400
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
@@ -34,6 +40,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id env XDG_DATA_DIRS=/usr/local/share:/usr/share:$XDG_DATA_DIRS nm-applet
+exec --no-startup-id env XDG_DATA_DIRS=/usr/local/share:/usr/share:${XDG_DATA_DIRS} blueman-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -190,7 +197,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -f 'pango:DejaVu Sans 20' -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {

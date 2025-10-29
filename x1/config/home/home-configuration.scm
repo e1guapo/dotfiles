@@ -28,7 +28,6 @@
 
                         "tree"
                         "nmap"
-                        "keepassxc"
                         "flameshot"
                         "imagemagick"
                         "python-virtualenv"
@@ -73,8 +72,7 @@
                         "openssl"
                         "pkg-config"
                         "libxcrypt"
-                        "glibc-locales"
-                        "xfce4-settings")))
+                        "glibc-locales")))
 
   ;; Below is the list of Home services.  To search for available
   ;; services, run 'guix home search KEYWORD' in a terminal.
