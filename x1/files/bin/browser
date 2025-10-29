@@ -1,2 +1,3 @@
 #!/bin/bash
+export XDG_DATA_DIRS="/usr/local/share:/usr/share:${XDG_DATA_DIRS}"
 exec brave-browser-stable --force-device-scale-factor=2 "$@"
