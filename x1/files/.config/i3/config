@@ -23,6 +23,7 @@ font pango:DejaVu Sans Mono 20
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id env XDG_DATA_DIRS="/usr/local/share:/usr/share:${XDG_DATA_DIRS}" dex-autostart --autostart --environment i3
 exec --no-startup-id xfsettingsd
+exec --no-startup-id flameshot
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
