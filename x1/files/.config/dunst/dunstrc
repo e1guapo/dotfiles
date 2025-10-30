@@ -1,0 +1,13 @@
+# See dunst(5) for all configuration options
+# Overrides settings from /etc/xdg/dunst/dunstrc
+
+[global]
+    # Scale factor. It is auto-detected if value is 0.
+    scale = 2
+
+    ### Text ###
+
+    font = Monospace 24
+
+    # Browser for opening urls in context menu.
+    browser = ~/bin/browser
