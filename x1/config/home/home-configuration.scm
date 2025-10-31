@@ -33,6 +33,7 @@
                         "python-virtualenv"
                         "cifs-utils"
                         "node"
+                        "openjdk@23.0.2"
                         "git-lfs"
                         "gnupg"
                         "git"
