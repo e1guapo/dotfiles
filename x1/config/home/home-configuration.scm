@@ -79,11 +79,14 @@
   ;; services, run 'guix home search KEYWORD' in a terminal.
   (services (list (simple-service 'custom-env-vars
                                   home-environment-variables-service-type
-                                  `(("PATH" . "/var/lib/flatpak/exports/bin:$PATH")
-                                    ("PATH" . "$HOME/.local/share/flatpak/exports/bin:$PATH")
-                                    ("PATH" . "$HOME/.local/bin:$PATH")
-                                    ("PATH" . "$HOME/bin:$PATH")
-                                    ("GDK_DPI_SCALE" . "1.25")))
+                                  (append '(("PATH" . "/var/lib/flatpak/exports/bin:$PATH")
+                                            ("PATH" . "$HOME/.local/share/flatpak/exports/bin:$PATH")
+                                            ("PATH" . "$HOME/.local/bin:$PATH")
+                                            ("PATH" . "$HOME/bin:$PATH"))
+                                          '(("XCURSOR_PATH" . "$HOME/.guix-home/profile/share/icons:/usr/share/icons:$HOME/.icons")
+                                            ("XCURSOR_SIZE" . "48")
+                                            ("XCURSOR_THEME" . "Adwaita")
+                                            ("GDK_DPI_SCALE" . "1.25"))))
                   (service home-bash-service-type
                            (home-bash-configuration
                             (bashrc (list (local-file "../../files/.bashrc" "bashrc")))
