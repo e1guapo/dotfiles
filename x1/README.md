@@ -99,7 +99,8 @@ sudo ./guix-install.sh
 ```
 
 ### set up selinux policy for guix
-[`https://guix.gnu.org/manual/devel/en/html_node/SELinux-Support.html`](https://guix.gnu.org/manual/devel/en/html_node/SELinux-Support.html)
+[Guix SELinux Support](https://guix.gnu.org/manual/devel/en/html_node/SELinux-Support.html)
+
 
 ### Set up virtualization
 https://docs.fedoraproject.org/en-US/quick-docs/virtualization-getting-started/\#\_enabling\_hardware\_virtualization\_support

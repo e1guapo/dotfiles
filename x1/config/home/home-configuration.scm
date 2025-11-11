@@ -13,6 +13,18 @@
              (gnu home services shells)
              (gnu home services xdg))
 
+(define flameshot-shortcuts-desktop
+  (plain-file
+   "set-flameshot-shortcuts.desktop"
+   (string-append
+    "[Desktop Entry]\n"
+    "Type=Application\n"
+    "Version=1.0\n"
+    "Name=Set Flameshot Shortcuts\n"
+    "Comment=Ensure PrintScreen bindings target Flameshot.\n"
+    "Exec=sh -c '$HOME/scripts/set_flameshot_shortcuts.sh'\n"
+    "X-GNOME-Autostart-enabled=true\n")))
+
 (home-environment
   ;; Below is the list of packages that will show up in your
   ;; Home profile, under ~/.guix-home/profile.
@@ -99,4 +111,9 @@
                   (service home-dotfiles-service-type
                            (home-dotfiles-configuration
                             (directories '("../../files"))
-                            (excluded '("^\\.bashrc$" "^\\.bash_logout$" "^\\.bash_profile$" "^\\.profile$")))))))
+                            (excluded '("^\\.bashrc$" "^\\.bash_logout$" "^\\.bash_profile$" "^\\.profile$"))))
+                  (simple-service 'flameshot-shortcuts-autostart
+                                  home-xdg-configuration-files-service-type
+                                  (list
+                                   `("autostart/set-flameshot-shortcuts.desktop"
+                                     ,flameshot-shortcuts-desktop))))))
