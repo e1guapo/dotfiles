@@ -117,9 +117,6 @@ fi
 ################################################################################
 set -o vi
 export EDITOR=vim
-# Note: $HOME/bin and $HOME/.local/bin are managed by guix home configuration
-export PATH=/opt/jdk-21.0.7+6/bin:$PATH
-alias ghidra=/opt/ghidra_11.3.2_PUBLIC/ghidraRun
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert

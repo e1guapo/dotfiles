@@ -26,6 +26,8 @@
                         ;; RS BBN access
                         "keepassxc"
 
+                        "cloc"
+                        "strace"
                         "tree"
                         "nmap"
                         "flameshot"
@@ -82,6 +84,7 @@
                                   home-environment-variables-service-type
                                   (append '(("PATH" . "/var/lib/flatpak/exports/bin:$PATH")
                                             ("PATH" . "$HOME/.local/share/flatpak/exports/bin:$PATH")
+                                            ("PATH" . "/opt/ghidra_11.4.2_PUBLIC:$PATH")
                                             ("PATH" . "$HOME/.local/bin:$PATH")
                                             ("PATH" . "$HOME/bin:$PATH"))
                                           '(("XCURSOR_PATH" . "$HOME/.guix-home/profile/share/icons:/usr/share/icons:$HOME/.icons")
