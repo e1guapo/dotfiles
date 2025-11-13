@@ -48,7 +48,7 @@
                         "cifs-utils"
                         "node"
                         "openjdk@23.0.2"
-                        "git-lfs"
+                        ;;"git-lfs" ;; uncomment when not broken (ruby-activesupport test failing)
                         "gnupg"
                         "git"
                         "direnv"
@@ -99,19 +99,36 @@
                                             ("PATH" . "/opt/ghidra_11.4.2_PUBLIC:$PATH")
                                             ("PATH" . "$HOME/.local/bin:$PATH")
                                             ("PATH" . "$HOME/bin:$PATH"))
+                                          '(("EDITOR" . "vim")
+                                            ("HISTSIZE" . "5000")
+                                            ;; don't put lines starting with space in the history.
+                                            ;; See bash(1) for more options
+                                            ("HISTCONTROL" . "ignorespace"))
                                           '(("XCURSOR_PATH" . "$HOME/.guix-home/profile/share/icons:/usr/share/icons:$HOME/.icons")
                                             ("XCURSOR_SIZE" . "48")
                                             ("XCURSOR_THEME" . "Adwaita")
                                             ("GDK_DPI_SCALE" . "1.25"))))
                   (service home-bash-service-type
                            (home-bash-configuration
-                            (bashrc (list (local-file "../../files/.bashrc" "bashrc")))
-                            (bash-profile (list (local-file "../../files/.bash_profile" "bash_profile")))
-                            (bash-logout (list (local-file "../../files/.bash_logout" "bash_logout")))))
+                            (aliases '(
+                                       ("claude" . "npx @anthropic-ai/claude-code")
+                                       ("codex" . "npx @openai/codex@latest")
+                                       ("ghidra" . "/opt/ghidra_11.3.2_PUBLIC/ghidraRun")
+                                       ("l" . "ls -CF")
+                                       ("la" . "ls -A")
+                                       ("ll" . "ls -alF")))
+                            (bashrc
+                              (list (local-file "bash_config_files/base.bashrc")
+                                    (local-file "bash_config_files/conda.bashrc")
+                                    (local-file "bash_config_files/direnv.bashrc")
+                                    (local-file "bash_config_files/flatpak.bashrc")
+                                    (local-file "bash_config_files/ssh-agent.bashrc")
+                                    (local-file "bash_config_files/uv.bashrc")))
+                            (bash-profile (list (local-file "bash_config_files/bash_profile.bashrc")))
+                            (bash-logout (list (local-file "bash_config_files/bash_logout.bashrc")))))
                   (service home-dotfiles-service-type
                            (home-dotfiles-configuration
-                            (directories '("../../files"))
-                            (excluded '("^\\.bashrc$" "^\\.bash_logout$" "^\\.bash_profile$" "^\\.profile$"))))
+                            (directories '("../../files"))))
                   (simple-service 'flameshot-shortcuts-autostart
                                   home-xdg-configuration-files-service-type
                                   (list
