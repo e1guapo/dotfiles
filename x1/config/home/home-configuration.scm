@@ -119,6 +119,7 @@
                                        ("ll" . "ls -alF")))
                             (bashrc
                               (list (local-file "bash_config_files/base.bashrc")
+                                    (local-file "bash_config_files/bash-prompt.bashrc")
                                     (local-file "bash_config_files/conda.bashrc")
                                     (local-file "bash_config_files/direnv.bashrc")
                                     (local-file "bash_config_files/flatpak.bashrc")
