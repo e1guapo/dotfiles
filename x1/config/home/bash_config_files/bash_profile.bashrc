@@ -1,11 +1,3 @@
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
-    fi
-fi
-
 if [ -d "$HOME/.bash_completion" ] && [ -d "$HOME/.guix-profile/etc/bash_completion.d" ]; then
     for f in ~/.guix-profile/etc/bash_completion.d/*; do
         dest_link=".bash_completion/$(basename $f)"
@@ -14,4 +6,3 @@ if [ -d "$HOME/.bash_completion" ] && [ -d "$HOME/.guix-profile/etc/bash_complet
         fi
     done
 fi
-

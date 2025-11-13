@@ -38,6 +38,7 @@
                         ;; RS BBN access
                         "keepassxc"
 
+                        "ranger"
                         "cloc"
                         "strace"
                         "tree"
@@ -100,7 +101,7 @@
                                             ("PATH" . "$HOME/.local/bin:$PATH")
                                             ("PATH" . "$HOME/bin:$PATH"))
                                           '(("EDITOR" . "vim")
-                                            ("HISTSIZE" . "5000")
+                                            ("HISTSIZE" . "10000")
                                             ;; don't put lines starting with space in the history.
                                             ;; See bash(1) for more options
                                             ("HISTCONTROL" . "ignorespace"))
@@ -129,7 +130,9 @@
                             (bash-logout (list (local-file "bash_config_files/bash_logout.bashrc")))))
                   (service home-dotfiles-service-type
                            (home-dotfiles-configuration
-                            (directories '("../../files"))))
+                            (directories '("../../files"))
+                            ;; We are explicit with the excluded list to remove all the .git stuff.
+                            (excluded '(".*~" ".*\\.swp"))))
                   (simple-service 'flameshot-shortcuts-autostart
                                   home-xdg-configuration-files-service-type
                                   (list

@@ -13,6 +13,7 @@
 [core]
 	autocrlf = input
 	excludesfile = /home/dennis/.gitignore
+	editor = vim
 [http]
 	sslCAinfo = /etc/ssl/certs/ca-certificates.crt
 [includeIf "gitdir:**/redshell/**"]
