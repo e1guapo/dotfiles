@@ -97,7 +97,14 @@
                                   home-environment-variables-service-type
                                   (append '(("PATH" . "/var/lib/flatpak/exports/bin:$PATH")
                                             ("PATH" . "$HOME/.local/share/flatpak/exports/bin:$PATH")
+
+                                            ;; Android tools installed with Android Studio.
+                                            ("PATH" . "$HOME/Android/Sdk/build-tools/36.1.0:$PATH")
+                                            ("PATH" . "$HOME/Android/Sdk/platform-tools/:$PATH")
+
+                                            ;; Ghidra
                                             ("PATH" . "/opt/ghidra_11.4.2_PUBLIC:$PATH")
+
                                             ("PATH" . "$HOME/.local/bin:$PATH")
                                             ("PATH" . "$HOME/bin:$PATH"))
                                           '(("EDITOR" . "vim")
