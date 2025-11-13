@@ -28,6 +28,11 @@ function set_git_branch () {
 function set_bash_prompt () {
     PS1=""
 
+    # Add virtual environment if active
+    if [ -n "$VIRTUAL_ENV" ]; then
+        PS1+="${GRAY}($(basename "$VIRTUAL_ENV"))${COLOR_NONE} "
+    fi
+
     # Host and directory
     PS1+="${LT_CYAN}\u@\h${COLOR_NONE} ${LT_RED}${BOLD}⛧${COLOR_NONE} "
     PS1+="${GREEN}\w${COLOR_NONE} • "
