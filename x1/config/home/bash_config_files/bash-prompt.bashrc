@@ -26,6 +26,7 @@ function set_git_branch () {
 }
 
 function set_bash_prompt () {
+    local exit_code=$?
     PS1=""
 
     # Add virtual environment if active
@@ -47,7 +48,7 @@ function set_bash_prompt () {
     PS1+="${GREEN}$(date +'%r')${COLOR_NONE}\n"
 
     # Prompt character with color based on exit code
-    if [ "$?" == "0" ]; then
+    if [ "$exit_code" == "0" ]; then
         PS1+="${LT_GREEN}"
     else
         PS1+="${LT_RED}"
@@ -55,4 +56,8 @@ function set_bash_prompt () {
     PS1+="λ${COLOR_NONE} "
 }
 
-export PROMPT_COMMAND=set_bash_prompt
+if [[ -z "${PROMPT_COMMAND:-}" ]]; then
+    PROMPT_COMMAND="set_bash_prompt"
+elif [[ "${PROMPT_COMMAND}" != *"set_bash_prompt"* ]]; then
+    PROMPT_COMMAND="set_bash_prompt;${PROMPT_COMMAND}"
+fi
