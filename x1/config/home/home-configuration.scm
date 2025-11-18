@@ -38,7 +38,14 @@
                         ;; RS BBN access
                         "keepassxc"
 
+                        "zephyr-gnuarmemb-nano-toolchain"
+                        "imhex"
+                        "imhex-pattern-language"
+                        "binwalk"
+
                         "ranger"
+                        "clang"
+                        "llvm"
                         "cloc"
                         "strace"
                         "tree"
@@ -55,8 +62,6 @@
                         "direnv"
                         "cmake"
                         "texlive"
-                        "imhex-pattern-language"
-                        "imhex"
                         "xss-lock"
                         "fontconfig"
                         "slirp4netns"
