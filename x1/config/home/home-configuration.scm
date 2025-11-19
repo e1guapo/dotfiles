@@ -113,6 +113,7 @@
                                             ("PATH" . "$HOME/.local/bin:$PATH")
                                             ("PATH" . "$HOME/bin:$PATH"))
                                           '(("EDITOR" . "vim")
+                                            ("VISUAL" . "vim")
                                             ("HISTSIZE" . "10000")
                                             ;; don't put lines starting with space in the history.
                                             ;; See bash(1) for more options
