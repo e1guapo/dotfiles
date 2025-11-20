@@ -13,15 +13,15 @@ This setup is for a Lenovo ThinkPad X1 Carbon running Fedora i3 Spin (Fedora 42)
 ## Install basic packages
 
 ### Install packages using native package manager (`dnf`)
-- `install lxappearance - configure system settings (like font size)`
-- `Install bolt - kernel driver for thunderbolt`
-- `Install power/settings management apps`
-- `Install flatpak`
-- `Install virtualization group`
+- install `lxappearance` - configure system settings (like font size)
+- Install `bolt` - kernel driver for thunderbolt
+- Install power/settings management apps
+- Install flatpak
+- Install virtualization group
+- SELinux analysis tools
 ```
-sudo dnf install -y lxappearance bolt blueman xfce4-settings
-sudo dnf install -y xfce4-power-manager flatpak
-sudo dnf install @virtualization
+sudo dnf install -y lxappearance bolt blueman xfce4-settings xfce4-power-manager
+sudo dnf install -y flatpak @virtualization setools-console
 ```
 
 ### Use `xfce4-power-manager-settings` to configure power management settings.
@@ -99,11 +99,13 @@ sudo ./guix-install.sh
 ```
 
 ### set up selinux policy for guix
-[Guix SELinux Support](https://guix.gnu.org/manual/devel/en/html_node/SELinux-Support.html)
+`https://guix.gnu.org/manual/devel/en/html_node/SELinux-Support.html`
 
+
+### Configure network access for guix daemon/container
 
 ### Set up virtualization
-https://docs.fedoraproject.org/en-US/quick-docs/virtualization-getting-started/\#\_enabling\_hardware\_virtualization\_support
+`https://docs.fedoraproject.org/en-US/quick-docs/virtualization-getting-started/\#\_enabling\_hardware\_virtualization\_support`
 
 ### fix boot legibility
 1. Change GRUB to make the GRUB menu legible. First, generate a font:

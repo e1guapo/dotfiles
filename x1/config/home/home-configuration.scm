@@ -115,6 +115,9 @@
 
                                             ("PATH" . "$HOME/.local/bin:$PATH")
                                             ("PATH" . "$HOME/bin:$PATH"))
+                                          ;; Android
+                                          '(("SCRCPY_PATH" .  "/home/dennis/data/tools/scrcpy-linux-x86_64-v3.3.3"))
+
                                           '(("EDITOR" . "vim")
                                             ("VISUAL" . "vim")
                                             ("HISTSIZE" . "10000")
