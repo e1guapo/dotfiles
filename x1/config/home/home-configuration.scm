@@ -25,6 +25,9 @@
     "Exec=sh -c '$HOME/scripts/set_flameshot_shortcuts.sh'\n"
     "X-GNOME-Autostart-enabled=true\n")))
 
+(define bash-config-dir
+  (string-append (dirname (current-filename)) "/../../files/.bash_config_files/"))
+
 (home-environment
   ;; Below is the list of packages that will show up in your
   ;; Home profile, under ~/.guix-home/profile.
@@ -132,16 +135,16 @@
                                        ("la" . "ls -A")
                                        ("ll" . "ls -alF")))
                             (bashrc
-                              (list (local-file "bash_config_files/base.bashrc")
-                                    (local-file "bash_config_files/bash-prompt.bashrc")
-                                    (local-file "bash_config_files/conda.bashrc")
-                                    (local-file "bash_config_files/direnv.bashrc")
-                                    (local-file "bash_config_files/flatpak.bashrc")
-                                    (local-file "bash_config_files/ssh-agent.bashrc")
-                                    (local-file "bash_config_files/adb.bashrc")
-                                    (local-file "bash_config_files/uv.bashrc")))
-                            (bash-profile (list (local-file "bash_config_files/bash_profile.bashrc")))
-                            (bash-logout (list (local-file "bash_config_files/bash_logout.bashrc")))))
+                              (list (local-file (string-append bash-config-dir "base.bashrc"))
+                                    (local-file (string-append bash-config-dir "bash-prompt.bashrc"))
+                                    (local-file (string-append bash-config-dir "conda.bashrc"))
+                                    (local-file (string-append bash-config-dir "direnv.bashrc"))
+                                    (local-file (string-append bash-config-dir "flatpak.bashrc"))
+                                    (local-file (string-append bash-config-dir "ssh-agent.bashrc"))
+                                    (local-file (string-append bash-config-dir "adb.bashrc"))
+                                    (local-file (string-append bash-config-dir "uv.bashrc"))))
+                            (bash-profile (list (local-file (string-append bash-config-dir "bash_profile.bashrc"))))
+                            (bash-logout (list (local-file (string-append bash-config-dir "bash_logout.bashrc"))))))
                   (service home-dotfiles-service-type
                            (home-dotfiles-configuration
                             (directories '("../../files"))
