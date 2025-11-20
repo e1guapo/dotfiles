@@ -27,7 +27,7 @@ function set_git_branch () {
 
 function set_bash_prompt () {
     local exit_code=$?
-    PS1=""
+    PS1="\n"
 
     # Add virtual environment if active
     if [ -n "$VIRTUAL_ENV" ]; then

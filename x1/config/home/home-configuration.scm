@@ -138,6 +138,7 @@
                                     (local-file "bash_config_files/direnv.bashrc")
                                     (local-file "bash_config_files/flatpak.bashrc")
                                     (local-file "bash_config_files/ssh-agent.bashrc")
+                                    (local-file "bash_config_files/adb.bashrc")
                                     (local-file "bash_config_files/uv.bashrc")))
                             (bash-profile (list (local-file "bash_config_files/bash_profile.bashrc")))
                             (bash-logout (list (local-file "bash_config_files/bash_logout.bashrc")))))
