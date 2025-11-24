@@ -38,6 +38,9 @@
                         ;; "coreutils"
                         ;; "bash"
 
+                        ;; android stuff
+                        "git-repo"
+
                         ;; RS BBN access
                         "keepassxc"
 
@@ -47,6 +50,7 @@
                         "binwalk"
 
                         "ranger"
+                        "util-linux"
                         "clang"
                         "llvm"
                         "cloc"
@@ -59,7 +63,7 @@
                         "cifs-utils"
                         "node"
                         "openjdk@23.0.2"
-                        ;;"git-lfs" ;; uncomment when not broken (ruby-activesupport test failing)
+                        "git-lfs" ;; uncomment when not broken (ruby-activesupport test failing)
                         "gnupg"
                         "git"
                         "direnv"
