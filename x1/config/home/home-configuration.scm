@@ -119,8 +119,12 @@
 
                                             ("PATH" . "$HOME/.local/bin:$PATH")
                                             ("PATH" . "$HOME/bin:$PATH"))
+
                                           ;; Android
-                                          '(("SCRCPY_PATH" .  "/home/dennis/data/tools/scrcpy-linux-x86_64-v3.3.3"))
+                                          '(("SCRCPY_PATH" .  "/home/dennis/data/tools/scrcpy-linux-x86_64-v3.3.3")
+
+                                            ;; Ensure Python picks up Guix-provided site-packages.
+                                            ("PYTHONPATH" . "$GUIX_PYTHONPATH${PYTHONPATH:+:}$PYTHONPATH"))
 
                                           '(("EDITOR" . "vim")
                                             ("VISUAL" . "vim")

@@ -27,10 +27,11 @@ sudo dnf install -y flatpak @virtualization setools-console
 ### Use `xfce4-power-manager-settings` to configure power management settings.
 GUI
 
-### Install obsidian.
+### Install obsidian, yubikey authenticator.
 ```
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak install flathub md.obsidian.Obsidian
+flatpak install com.yubico.yubioath
 ```
 
 ### Fix graphics for second monitor
