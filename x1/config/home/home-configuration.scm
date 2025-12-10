@@ -51,6 +51,7 @@
 
                         "ranger"
                         "util-linux"
+                        "gdb-multiarch"
                         "clang"
                         "llvm"
                         "cloc"
@@ -123,6 +124,8 @@
                                           ;; Android
                                           '(("SCRCPY_PATH" .  "/home/dennis/data/tools/scrcpy-linux-x86_64-v3.3.3")
 
+                                            ("GHIDRA_INSTALL_DIR" . "/opt/ghidra_11.4.2_PUBLIC")
+
                                             ;; Ensure Python picks up Guix-provided site-packages.
                                             ("PYTHONPATH" . "$GUIX_PYTHONPATH${PYTHONPATH:+:}$PYTHONPATH"))
 
@@ -141,7 +144,6 @@
                             (aliases '(
                                        ("claude" . "npx @anthropic-ai/claude-code")
                                        ("codex" . "npx @openai/codex@latest")
-                                       ("ghidra" . "/opt/ghidra_11.3.2_PUBLIC/ghidraRun")
                                        ("l" . "ls -CF")
                                        ("la" . "ls -A")
                                        ("ll" . "ls -alF")))

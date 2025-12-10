@@ -315,6 +315,17 @@ nnoremap <C-n> :NERDTreeToggle<CR>
 if plug_installed
   autocmd StdinReadPre * let s:std_in=1
   autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+
+  " Keep language diagnostics off by default; toggle when needed.
+  let g:ale_enabled = 0
+  augroup diagnostics_off
+    autocmd!
+    autocmd VimEnter * silent! CocDisable
+  augroup END
+  nnoremap <leader>ae :ALEEnable<CR>
+  nnoremap <leader>ad :ALEDisable<CR>
+  nnoremap <leader>ce :CocEnable<CR>
+  nnoremap <leader>cd :CocDisable<CR>
 endif
 
 " Turn on by default.
