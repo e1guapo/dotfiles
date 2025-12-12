@@ -24,8 +24,22 @@ sudo dnf install -y lxappearance bolt blueman xfce4-settings xfce4-power-manager
 sudo dnf install -y flatpak @virtualization setools-console
 ```
 
-### Use `xfce4-power-manager-settings` to configure power management settings.
-GUI
+### Power Management Configuration
+
+XFCE Power Manager settings are automatically configured via `files/scripts/configure_xfce_power.sh` (runs at login).
+
+**Managed settings:**
+- `logind-handle-lid-switch: true` - Enables systemd logind to handle lid close events. This allows xss-lock to properly lock the screen with i3lock before suspend, preventing "screen lock failed" errors.
+- `dpms-on-ac-sleep: 0` - Never sleep display when on AC power
+- `dpms-on-ac-off: 0` - Never turn off display when on AC power
+- `dpms-on-battery-sleep: 30` - Sleep display after 30 minutes on battery
+- `dpms-on-battery-off: 40` - Turn off display after 40 minutes on battery
+- `profile-on-ac: performance` - Use performance profile when plugged in
+
+**Note:** Lid actions (`lid-action-on-ac`, `lid-action-on-battery`) should be left unset in XFCE since logind handles all lid close behavior.
+
+**Other settings** (configured manually via GUI, not managed by script):
+- Brightness levels, button actions, etc. can be adjusted using `xfce4-power-manager-settings` GUI
 
 ### Install obsidian, yubikey authenticator.
 ```

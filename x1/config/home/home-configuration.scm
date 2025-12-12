@@ -25,6 +25,18 @@
     "Exec=sh -c '$HOME/scripts/set_flameshot_shortcuts.sh'\n"
     "X-GNOME-Autostart-enabled=true\n")))
 
+(define xfce-power-config-desktop
+  (plain-file
+   "configure-xfce-power.desktop"
+   (string-append
+    "[Desktop Entry]\n"
+    "Type=Application\n"
+    "Version=1.0\n"
+    "Name=Configure XFCE Power Manager\n"
+    "Comment=Set XFCE Power Manager settings for logind lid handling.\n"
+    "Exec=sh -c '$HOME/scripts/configure_xfce_power.sh'\n"
+    "X-GNOME-Autostart-enabled=true\n")))
+
 (define bash-config-dir
   (string-append (dirname (current-filename)) "/../../files/.bash_config_files/"))
 
@@ -163,8 +175,10 @@
                             (directories '("../../files"))
                             ;; We are explicit with the excluded list to remove all the .git stuff.
                             (excluded '(".*~" ".*\\.swp"))))
-                  (simple-service 'flameshot-shortcuts-autostart
+                  (simple-service 'autostart-configs
                                   home-xdg-configuration-files-service-type
                                   (list
                                    `("autostart/set-flameshot-shortcuts.desktop"
-                                     ,flameshot-shortcuts-desktop))))))
+                                     ,flameshot-shortcuts-desktop)
+                                   `("autostart/configure-xfce-power.desktop"
+                                     ,xfce-power-config-desktop))))))

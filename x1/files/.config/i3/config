@@ -272,4 +272,4 @@ bar {
 }
 
 focus_follows_mouse no
-bindsym $mod+Escape exec "i3lock -c 000000"
+bindsym $mod+Escape exec "loginctl lock-session"
