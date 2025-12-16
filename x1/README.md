@@ -19,9 +19,12 @@ This setup is for a Lenovo ThinkPad X1 Carbon running Fedora i3 Spin (Fedora 42)
 - Install flatpak
 - Install virtualization group
 - SELinux analysis tools
+- Cross-platform compilation/analysis tools for arm and aarch64
 ```
 sudo dnf install -y lxappearance bolt blueman xfce4-settings xfce4-power-manager
 sudo dnf install -y flatpak @virtualization setools-console
+sudo dnf install -y binutils-aarch64-linux-gnu.x86_64 gcc-aarch64-linux-gnu.x86_64
+sudo dnf install -y binutils-arm-linux-gnu.x86_64 gcc-arm-linux-gnu.x86_64
 ```
 
 ### Power Management Configuration

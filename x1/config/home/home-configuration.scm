@@ -56,10 +56,10 @@
                         ;; RS BBN access
                         "keepassxc"
 
-                        "zephyr-gnuarmemb-nano-toolchain"
                         "imhex"
                         "imhex-pattern-language"
                         "binwalk"
+                        "qemu"
 
                         "ranger"
                         "util-linux"
