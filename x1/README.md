@@ -109,6 +109,28 @@ curl -fsS https://dl.brave.com/install.sh | sh
 
 _Change startup for brave to increase font size with the `--force-device-scale-factor=2` parameter. We currently do this with a wrapper script: `~/bin/browser`._
 
+### Python Environment Management
+
+**Do NOT install `python-pip` via Guix.** System-managed pip conflicts with user upgrades and breaks vendored dependencies.
+
+Instead, use one of these approaches:
+
+1. **uv** (recommended, already installed):
+   ```bash
+   uv venv my-project
+   source my-project/bin/activate
+   uv pip install <packages>
+   ```
+
+2. **Python's built-in venv**:
+   ```bash
+   python -m venv my-env
+   source my-env/bin/activate
+   pip install <packages>  # pip included automatically
+   ```
+
+Both methods create isolated environments with their own pip installation.
+
 ### install guix
 ```
 wget 'https://git.savannah.gnu.org/gitweb/?p=guix.git;a=blob_plain;f=etc/guix-install.sh;hb=HEAD'

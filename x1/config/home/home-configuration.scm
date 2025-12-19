@@ -87,7 +87,6 @@
                         "slirp4netns"
                         "tk"
                         "python"
-                        "python-pip"
                         "python-packaging"
                         "texlive-inconsolata-nerd-font"
                         "universal-ctags"
