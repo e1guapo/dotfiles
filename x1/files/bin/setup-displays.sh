@@ -5,13 +5,38 @@ INTERNAL="eDP-1"
 TARGET_MODE="3840x1600"
 TARGET_RATE="60"
 
-XR=$(xrandr --query)
+LOG_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/display-setup"
+LOG_FILE="$LOG_DIR/display-setup.log"
+TAG="display-setup"
+
+mkdir -p "$LOG_DIR"
+
+ts() { date '+%F %T%z'; }
+
+log() {
+  local msg="$*"
+  printf '%s %s\n' "$(ts)" "$msg" >> "$LOG_FILE"
+  # Also to the systemd journal (best effort)
+  command -v logger >/dev/null 2>&1 && logger -t "$TAG" -- "$msg" || true
+}
+
+die() {
+  log "ERROR: $*"
+  exit 1
+}
+
+log "---- run start (pid=$$, tty=${TTY:-none}, display=${DISPLAY:-unset}) ----"
+
+XR=$(xrandr --query 2>&1) || die "xrandr failed: $XR"
 
 # Pick the first connected MST sink (DP-*-*)
-EXTERNAL=$(printf "%s\n" "$XR" | awk '/^DP-[0-9]+-[0-9]+ connected/ {print $1; exit}')
-[ -n "${EXTERNAL:-}" ] || exit 0
+EXTERNAL=$(printf "%s\n" "$XR" | awk '/^DP-[0-9]+-[0-9]+ connected/ {print $1; exit}' || true)
 
-# Extract geometry token like 2880x1800+0+0 from a connector line
+if [ -z "${EXTERNAL:-}" ]; then
+  log "no external MST output detected; exiting"
+  exit 0
+fi
+
 geo_from_line() {
   awk '{
     for (i=1;i<=NF;i++)
@@ -19,51 +44,43 @@ geo_from_line() {
   }'
 }
 
-ILINE=$(printf "%s\n" "$XR" | awk -v o="$INTERNAL" '$1==o {print; exit}')
-ELINE=$(printf "%s\n" "$XR" | awk -v o="$EXTERNAL" '$1==o {print; exit}')
+ILINE=$(printf "%s\n" "$XR" | awk -v o="$INTERNAL" '$1==o {print; exit}' || true)
+ELINE=$(printf "%s\n" "$XR" | awk -v o="$EXTERNAL" '$1==o {print; exit}' || true)
 
-[ -n "${ILINE:-}" ] || exit 0
-[ -n "${ELINE:-}" ] || exit 0
+[ -n "${ILINE:-}" ] || die "internal output $INTERNAL not found in xrandr output"
+[ -n "${ELINE:-}" ] || die "external output $EXTERNAL not found in xrandr output"
 
-IGEO=$(printf "%s\n" "$ILINE" | geo_from_line)
-EGEO=$(printf "%s\n" "$ELINE" | geo_from_line)
+IGEO=$(printf "%s\n" "$ILINE" | geo_from_line || true)
+EGEO=$(printf "%s\n" "$ELINE" | geo_from_line || true)
 
-# If external is not enabled (no geometry), we must configure it.
-if [ -z "${EGEO:-}" ]; then
-  NEEDS_CONFIG=1
-else
-  # Compute desired external position: right-of internal
-  IW=${IGEO%%x*}
-  REST=${IGEO#*x}
-  IH=${REST%%+*}
-  REST=${REST#*+}
-  IX=${REST%%+*}
-  IY=${REST#*+}
+log "detected: internal=$INTERNAL line='$ILINE' geo='${IGEO:-none}'"
+log "detected: external=$EXTERNAL line='$ELINE' geo='${EGEO:-none}'"
 
-  DX=$((IX + IW))
-  DY=$IY
-  WANT_GEO="${TARGET_MODE}+${DX}+${DY}"
+[ -n "${IGEO:-}" ] || die "could not parse internal geometry for $INTERNAL"
 
-  if [ "$EGEO" = "$WANT_GEO" ]; then
-    # Already correct — do absolutely nothing (prevents MST flicker on i3 reload).
-    exit 0
-  fi
-  NEEDS_CONFIG=1
-fi
-
-# Only below here do we touch outputs.
-# Keep changes minimal; avoid toggling outputs off unless absolutely necessary.
-# Ensure internal stays primary (no mode change unless you want one).
-xrandr --output "$INTERNAL" --primary
-
-# Configure external to desired mode+position.
-# (Setting the same mode repeatedly is avoided by the early exit above.)
+# Compute desired external position: right-of internal
 IW=${IGEO%%x*}
 REST=${IGEO#*x}
 REST=${REST#*+}
 IX=${REST%%+*}
 IY=${REST#*+}
+
 DX=$((IX + IW))
 DY=$IY
+WANT_GEO="${TARGET_MODE}+${DX}+${DY}"
 
+log "desired: external mode=${TARGET_MODE}@${TARGET_RATE} pos=${DX}x${DY} want_geo=${WANT_GEO}"
+
+# If external is enabled and already at desired geometry, do nothing
+if [ -n "${EGEO:-}" ] && [ "$EGEO" = "$WANT_GEO" ]; then
+  log "no-op: external already configured (${EGEO})"
+  exit 0
+fi
+
+log "apply: configuring external (was '${EGEO:-disabled}') -> '$WANT_GEO'"
+
+# Minimal touch: just ensure primary, then set external mode/pos
+xrandr --output "$INTERNAL" --primary
 xrandr --output "$EXTERNAL" --mode "$TARGET_MODE" --rate "$TARGET_RATE" --pos "${DX}x${DY}"
+
+log "apply: done"
